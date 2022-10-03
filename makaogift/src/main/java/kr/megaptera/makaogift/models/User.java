@@ -1,5 +1,6 @@
 package kr.megaptera.makaogift.models;
 
+import kr.megaptera.makaogift.dtos.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
@@ -21,6 +22,13 @@ public class User {
   private Long amount;
 
   public User() {
+  }
+
+  public User(Long id, String userId, String name) {
+    this.id = id;
+    this.userId = userId;
+    this.name = name;
+    this.amount = 50_000L;
   }
 
   public User(Long id, String userId, String name, Long amount) {
@@ -56,5 +64,9 @@ public class User {
 
   public static User fake(String userId) {
     return new User(1L, userId, "전민지", 50_000L);
+  }
+
+  public RegistrationResultDto toRegistrationResultDto() {
+    return new RegistrationResultDto(name, userId, amount);
   }
 }
