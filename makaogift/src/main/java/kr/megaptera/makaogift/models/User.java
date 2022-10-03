@@ -13,28 +13,28 @@ public class User {
   @GeneratedValue
   private Long id;
 
+  private String name;
+
   private String userId;
 
   private String encodedPassword;
-
-  private String name;
 
   private Long amount;
 
   public User() {
   }
 
-  public User(Long id, String userId, String name) {
+  public User(Long id, String name, String userId) {
     this.id = id;
-    this.userId = userId;
     this.name = name;
+    this.userId = userId;
     this.amount = 50_000L;
   }
 
-  public User(Long id, String userId, String name, Long amount) {
+  public User(Long id, String name, String userId, Long amount) {
     this.id = id;
-    this.userId = userId;
     this.name = name;
+    this.userId = userId;
     this.amount = amount;
   }
 
@@ -42,12 +42,12 @@ public class User {
     return id;
   }
 
-  public String userId() {
-    return userId;
-  }
-
   public String name() {
     return name;
+  }
+
+  public String userId() {
+    return userId;
   }
 
   public Long amount() {
@@ -63,7 +63,7 @@ public class User {
   }
 
   public static User fake(String userId) {
-    return new User(1L, userId, "전민지", 50_000L);
+    return new User(1L, "전민지", userId, 50_000L);
   }
 
   public RegistrationResultDto toRegistrationResultDto() {
