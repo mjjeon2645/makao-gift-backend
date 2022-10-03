@@ -4,16 +4,19 @@ import kr.megaptera.makaogift.dtos.*;
 import kr.megaptera.makaogift.exceptions.*;
 import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.services.*;
+import kr.megaptera.makaogift.utils.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("session")
 public class SessionController {
-  private LoginService loginService;
+  private final LoginService loginService;
+  private final JwtUtil jwtUtil;
 
-  public SessionController(LoginService loginService) {
+  public SessionController(LoginService loginService, JwtUtil jwtUtil) {
     this.loginService = loginService;
+    this.jwtUtil = jwtUtil;
   }
 
   @PostMapping
@@ -26,7 +29,7 @@ public class SessionController {
         loginRequestDto.getUserId(),
         loginRequestDto.getPassword());
 
-    String accessToken = "ACCESS.TOKEN";
+    String accessToken = jwtUtil.encode(user.userId());
 
     return new LoginResultDto(accessToken, user.name(), user.amount());
   }

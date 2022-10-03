@@ -1,5 +1,8 @@
 package kr.megaptera.makaogift;
 
+import kr.megaptera.makaogift.interceptors.*;
+import kr.megaptera.makaogift.utils.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
@@ -10,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @SpringBootApplication
 public class MakaogiftApplication {
+	@Value("${jwt.secret}")
+	private String jwtSecret;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MakaogiftApplication.class, args);
@@ -26,12 +31,27 @@ public class MakaogiftApplication {
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
+	public WebMvcConfigurer webMvcConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**").allowedOrigins("*");
 			}
+
+			@Override
+			public void addInterceptors(InterceptorRegistry registry) {
+				registry.addInterceptor(authenticationInterceptor());
+			}
 		};
+	}
+
+	@Bean
+	public AuthenticationInterceptor authenticationInterceptor() {
+		return new AuthenticationInterceptor(jwtUtil());
+	}
+
+	@Bean
+	public JwtUtil jwtUtil() {
+		return new JwtUtil(jwtSecret);
 	}
 }
