@@ -5,11 +5,14 @@ import org.springframework.security.crypto.password.*;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "PERSON")
 public class User {
 
   @Id
   @GeneratedValue
   private Long id;
+
+  private String userId;
 
   private String encodedPassword;
 
@@ -20,14 +23,19 @@ public class User {
   public User() {
   }
 
-  public User(Long id, String name, Long amount) {
+  public User(Long id, String userId, String name, Long amount) {
     this.id = id;
+    this.userId = userId;
     this.name = name;
     this.amount = amount;
   }
 
   public Long id() {
     return id;
+  }
+
+  public String userId() {
+    return userId;
   }
 
   public String name() {
@@ -38,7 +46,15 @@ public class User {
     return amount;
   }
 
-  public String authenticate(String password, PasswordEncoder passwordEncoder) {
-    return null;
+  public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
+    return passwordEncoder.matches(password, encodedPassword);
+  }
+
+  public void changePassword(String password, PasswordEncoder passwordEncoder) {
+    encodedPassword = passwordEncoder.encode(password);
+  }
+
+  public static User fake(String userId) {
+    return new User(1L, userId, "전민지", 50_000L);
   }
 }

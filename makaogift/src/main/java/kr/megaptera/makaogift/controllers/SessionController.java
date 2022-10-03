@@ -2,6 +2,7 @@ package kr.megaptera.makaogift.controllers;
 
 import kr.megaptera.makaogift.dtos.*;
 import kr.megaptera.makaogift.exceptions.*;
+import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.services.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,13 @@ public class SessionController {
       @RequestBody LoginRequestDto loginRequestDto
   ) {
 
-    if (!loginRequestDto.getPassword().equals("123!@#qweQWE")) {
-      throw new LoginFailed();
-    }
+    User user = loginService.login(
+        loginRequestDto.getUserId(),
+        loginRequestDto.getPassword());
 
-    return loginService.authenticate(loginRequestDto.getUserId(), loginRequestDto.getPassword());
+    String accessToken = "ACCESS.TOKEN";
+
+    return new LoginResultDto(accessToken, user.name(), user.amount());
   }
 
   @ExceptionHandler(LoginFailed.class)

@@ -1,9 +1,8 @@
 package kr.megaptera.makaogift.services;
 
-import kr.megaptera.makaogift.dtos.*;
+import kr.megaptera.makaogift.exceptions.*;
 import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.repositories.*;
-import kr.megaptera.makaogift.utils.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -11,26 +10,25 @@ import org.springframework.transaction.annotation.*;
 @Service
 @Transactional
 public class LoginService {
-  private UserRepository userRepository;
+  private final UserRepository userRepository;
   private PasswordEncoder passwordEncoder;
-  private JwtUtil jwtUtil;
-
 
   public LoginService(UserRepository userRepository,
-                      PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+                      PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
-    this.jwtUtil = jwtUtil;
   }
 
-  public LoginResultDto authenticate(String userId, String password) {
+  public User login(String userId, String password) {
+    // 1. user 정보가 있는지 찾고
+    User found = userRepository.findByUserId(userId)
+        .orElseThrow(() -> new LoginFailed());
 
-    User found = userRepository.findByUserId(userId);
+    // 2. 그다음 그 user의 비밀번호와 비교하고.
+    if (!found.authenticate(password, passwordEncoder)) {
+      throw new LoginFailed();
+    }
 
-    found.authenticate(password, passwordEncoder);
-
-    String accessToken = jwtUtil.encode(userId);
-
-    return new LoginResultDto(accessToken, found.name(), found.amount());
+    return found;
   }
 }
