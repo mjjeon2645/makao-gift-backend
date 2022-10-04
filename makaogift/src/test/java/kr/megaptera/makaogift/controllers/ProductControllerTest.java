@@ -24,7 +24,6 @@ class ProductControllerTest {
   @MockBean
   private ProductService productService;
 
-
   @BeforeEach
   void setUp() {
     given(productService.products()).willReturn(List.of(

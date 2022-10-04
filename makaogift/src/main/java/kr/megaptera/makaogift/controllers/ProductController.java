@@ -18,8 +18,13 @@ public class ProductController {
 
   @GetMapping
   public List<ProductDto> lists() {
-   List<Product> products = productService.products();
-
-    return products.stream().map(Product::toProductDto).toList();
+    return productService.products().stream()
+        .map(Product::toProductDto).toList();
   }
+
+//  @GetMapping
+//  public List<ProductDto> lists() {
+//    return productService.products().stream()
+//        .map(Product::toProductDto).toList();
+//  }
 }
