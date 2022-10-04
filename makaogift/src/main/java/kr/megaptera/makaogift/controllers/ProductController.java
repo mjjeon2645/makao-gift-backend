@@ -25,9 +25,14 @@ public class ProductController {
     return new ProductsDto(productDtos);
   }
 
-//  @GetMapping
-//  public List<ProductDto> lists() {
-//    return productService.products().stream()
-//        .map(Product::toProductDto).toList();
-//  }
+  @GetMapping("{id}")
+  public ProductDto detail(
+      @PathVariable Long id
+  ) {
+    Product selectedProduct = productService.detail(id);
+
+    return selectedProduct.toProductDto();
+  }
+
+
 }
