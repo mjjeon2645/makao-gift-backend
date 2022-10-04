@@ -36,4 +36,34 @@ public class BackdoorController {
 
     return "OK";
   }
+
+  @GetMapping("reset-products")
+  public String resetProducts() {
+    // 1. 기존 데이터를 리셋한다
+    jdbcTemplate.execute("DELETE FROM product");
+
+    return "OK";
+  }
+
+  @GetMapping("setup-three-products")
+  public String setupThreeProducts() {
+    jdbcTemplate.execute("DELETE FROM product");
+
+    jdbcTemplate.execute("INSERT INTO product" +
+        "(id, name, price, manufacturer, description, img_source) " +
+        "VALUES(1, '누구나 좋아하는 지방시 선물세트', 10000, 'GIVENCHY', " +
+        "'지방시 선물세트 누구나 다 좋아합니다', 'imgSource')");
+
+    jdbcTemplate.execute("INSERT INTO product" +
+        "(id, name, price, manufacturer, description, img_source) " +
+        "VALUES(2, '새로나온 아이폰 14', 45000, '애플', " +
+        "'아이폰 14 싸다', 'imgSource')");
+
+    jdbcTemplate.execute("INSERT INTO product" +
+        "(id, name, price, manufacturer, description, img_source) " +
+        "VALUES(3, '맛있는 상주곶감', 30000, '상주농협', " +
+        "'어른분들께 선물로 드리기 좋아요', 'imgSource')");
+
+    return "ok";
+  }
 }
