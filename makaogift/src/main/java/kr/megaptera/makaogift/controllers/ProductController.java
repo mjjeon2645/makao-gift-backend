@@ -17,9 +17,12 @@ public class ProductController {
   }
 
   @GetMapping
-  public List<ProductDto> lists() {
-    return productService.products().stream()
+  public ProductsDto lists() {
+
+    List<ProductDto> productDtos =  productService.products().stream()
         .map(Product::toProductDto).toList();
+
+    return new ProductsDto(productDtos);
   }
 
 //  @GetMapping
