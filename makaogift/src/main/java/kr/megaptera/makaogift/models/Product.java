@@ -64,6 +64,6 @@ public class Product {
   }
 
   public ProductDto toProductDto() {
-    return new ProductDto(id, name, price, manufacturer, imgSource);
+    return new ProductDto(id, name, price, manufacturer, description, imgSource);
   }
 }

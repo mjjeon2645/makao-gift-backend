@@ -27,7 +27,7 @@ public class ProductController {
 
   @GetMapping("{id}")
   public ProductDto detail(
-      @PathVariable Long id
+      @PathVariable("id") Long id
   ) {
     Product selectedProduct = productService.detail(id);
 
