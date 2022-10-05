@@ -8,7 +8,6 @@ import org.springframework.web.servlet.*;
 import javax.servlet.http.*;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
-
   private final JwtUtil jwtUtil;
 
   public AuthenticationInterceptor(JwtUtil jwtUtil) {

@@ -69,4 +69,8 @@ public class User {
   public RegistrationResultDto toRegistrationResultDto() {
     return new RegistrationResultDto(name, userId, amount);
   }
+
+  public void pay(Long totalPrice) {
+    this.amount -= totalPrice;
+  }
 }
