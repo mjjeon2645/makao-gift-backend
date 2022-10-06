@@ -1,5 +1,6 @@
 package kr.megaptera.makaogift.models;
 
+import kr.megaptera.makaogift.dtos.*;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -46,5 +47,32 @@ public class OrderHistory {
     this.receiver = receiver;
     this.address = address;
     this.message = message;
+  }
+
+  public OrderHistory(Long id, String sender, String productName,
+                      String manufacturer, Long volume, Long totalPrice,
+                      LocalDateTime createdAt, String receiver, String address,
+                      String message) {
+    this.id = id;
+    this.sender = sender;
+    this.productName = productName;
+    this.manufacturer = manufacturer;
+    this.volume = volume;
+    this.totalPrice = totalPrice;
+    this.createdAt = createdAt;
+    this.receiver = receiver;
+    this.address = address;
+    this.message = message;
+  }
+
+  public OrderHistoryDto toDto() {
+
+    String orderedDate = createdAt.toLocalDate().toString();
+    String imgUrl = "imgUrl";
+
+    // TODO. OrderHistory 객체에 ImgUrl 항목 빠졌음. 추가할 것
+
+    return new OrderHistoryDto(productName, manufacturer, volume, totalPrice,
+        orderedDate, receiver, address, message, imgUrl);
   }
 }

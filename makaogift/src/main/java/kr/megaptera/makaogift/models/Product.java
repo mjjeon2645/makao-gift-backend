@@ -20,12 +20,6 @@ public class Product {
 
   private String imgSource;
 
-//  @CreationTimestamp
-//  private LocalDateTime createdAt;
-//
-//  @UpdateTimestamp
-//  private LocalDateTime updatedAt;
-
   public Product() {
   }
 
