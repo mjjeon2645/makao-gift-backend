@@ -1,6 +1,7 @@
 package kr.megaptera.makaogift.dtos;
 
 public class OrderHistoryDto {
+  private Long id;
   private String productName;
   private String manufacturer;
   private Long volume;
@@ -14,9 +15,10 @@ public class OrderHistoryDto {
   public OrderHistoryDto() {
   }
 
-  public OrderHistoryDto(String productName, String manufacturer, Long volume,
+  public OrderHistoryDto(Long id, String productName, String manufacturer, Long volume,
                          Long totalPrice, String orderedDate, String receiver,
                          String address, String message, String imgUrl) {
+    this.id = id;
     this.productName = productName;
     this.manufacturer = manufacturer;
     this.volume = volume;
@@ -26,6 +28,10 @@ public class OrderHistoryDto {
     this.address = address;
     this.message = message;
     this.imgUrl = imgUrl;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getProductName() {

@@ -3,13 +3,13 @@ package kr.megaptera.makaogift.dtos;
 import java.util.*;
 
 public class OrderHistoriesDto {
-  private List<OrderHistoryDto> orderHistoryDtos;
+  private List<OrderHistoryDto> orderHistories;
 
   public OrderHistoriesDto(List<OrderHistoryDto> orderHistoryDtos) {
-    this.orderHistoryDtos = orderHistoryDtos;
+    this.orderHistories = orderHistoryDtos;
   }
 
-  public List<OrderHistoryDto> getOrderHistoryDtos() {
-    return orderHistoryDtos;
+  public List<OrderHistoryDto> getOrderHistories() {
+    return orderHistories;
   }
 }

@@ -11,7 +11,7 @@ import java.util.stream.*;
 @RestController
 @RequestMapping("orders")
 public class OrderHistoryController {
-  private OrderHistoryService orderHistoryService;
+  private final OrderHistoryService orderHistoryService;
 
   public OrderHistoryController(OrderHistoryService orderHistoryService) {
     this.orderHistoryService = orderHistoryService;
@@ -21,11 +21,11 @@ public class OrderHistoryController {
   public OrderHistoriesDto histories(
       @RequestAttribute("userId") String sender
   ) {
-    List<OrderHistory> orderHistories = orderHistoryService.histories(sender);
 
-    List<OrderHistoryDto> orderHistoryDtos =
-        orderHistories.stream().map(OrderHistory::toDto).toList();
+    List<OrderHistoryDto> orderHistories =
+        orderHistoryService.histories(sender).stream().map(OrderHistory::toDto)
+            .collect(Collectors.toList());
 
-    return new OrderHistoriesDto(orderHistoryDtos);
+    return new OrderHistoriesDto(orderHistories);
   }
 }

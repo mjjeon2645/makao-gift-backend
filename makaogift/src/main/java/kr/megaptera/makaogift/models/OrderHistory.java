@@ -67,12 +67,13 @@ public class OrderHistory {
 
   public OrderHistoryDto toDto() {
 
-    String orderedDate = createdAt.toLocalDate().toString();
+    String orderedDate = createdAt == null ? "" : createdAt.toLocalDate().toString();
+
     String imgUrl = "imgUrl";
 
     // TODO. OrderHistory 객체에 ImgUrl 항목 빠졌음. 추가할 것
 
-    return new OrderHistoryDto(productName, manufacturer, volume, totalPrice,
+    return new OrderHistoryDto(id, productName, manufacturer, volume, totalPrice,
         orderedDate, receiver, address, message, imgUrl);
   }
 }
