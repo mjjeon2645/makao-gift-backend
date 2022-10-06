@@ -2,6 +2,7 @@ package kr.megaptera.makaogift.services;
 
 import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.repositories.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
@@ -16,9 +17,10 @@ public class ProductService {
     this.productRepository = productRepository;
   }
 
-  public List<Product> products() {
-//    Pageable pageable = PageRequest.of(page - 1, 8);
-    return productRepository.findAll();
+  public Page<Product> products(int page) {
+    Pageable pageable = PageRequest.of(page - 1, 8);
+
+    return productRepository.findAll(pageable);
   }
 
   public Product detail(Long id) {
