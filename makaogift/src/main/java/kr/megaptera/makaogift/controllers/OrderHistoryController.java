@@ -28,4 +28,13 @@ public class OrderHistoryController {
 
     return new OrderHistoriesDto(orderHistories);
   }
+
+  @GetMapping("{id}")
+  public OrderHistoryDto detail(
+      @PathVariable("id") Long id
+  ) {
+    OrderHistory orderHistory = orderHistoryService.detail(id);
+
+    return orderHistory.toDto();
+  }
 }

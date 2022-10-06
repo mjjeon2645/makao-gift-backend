@@ -37,7 +37,7 @@ class OrderHistoryControllerTest {
     String sender = "mjjeon2645";
     given(orderHistoryService.histories(sender)).willReturn(List.of(
         new OrderHistory(1L, "mjjeon2645", "아이폰14", "애플", 1L, 500000L,
-            any(), "이서진", "서울시 동작구", "서진아 생일축하해!")
+            any(), "이서진", "서울시 동작구", "서진아 생일축하해!", "imgUrl")
     ));
   }
 

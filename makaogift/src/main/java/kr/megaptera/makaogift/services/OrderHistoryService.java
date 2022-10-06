@@ -1,6 +1,6 @@
 package kr.megaptera.makaogift.services;
 
-import kr.megaptera.makaogift.dtos.*;
+import kr.megaptera.makaogift.exceptions.*;
 import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.repositories.*;
 import org.springframework.stereotype.*;
@@ -20,5 +20,13 @@ public class OrderHistoryService {
   public List<OrderHistory> histories(String sender) {
 
     return orderHistoryRepository.findAllBySender(sender);
+  }
+
+  public OrderHistory detail(Long historyId) {
+
+    OrderHistory found = orderHistoryRepository.findById(historyId)
+        .orElseThrow(() -> new OrderHistoryNotFound());
+
+    return found;
   }
 }

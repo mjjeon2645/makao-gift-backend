@@ -33,6 +33,4 @@ public class ProductController {
 
     return selectedProduct.toProductDto();
   }
-
-
 }
