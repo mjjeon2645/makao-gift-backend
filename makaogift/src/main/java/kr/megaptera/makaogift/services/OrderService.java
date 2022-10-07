@@ -22,7 +22,7 @@ public class OrderService {
     this.productRepository = productRepository;
   }
 
-  public void order(String sender, OrderRequestDto orderRequestDto) {
+  public OrderResultDto order(String sender, OrderRequestDto orderRequestDto) {
     // 1. order 서비스는 총 금액에 따라 sender의 amount를 차감해야 함
     User user = userRepository.findByUserId(sender)
         .orElseThrow(() -> new AuthenticationError());
@@ -53,5 +53,7 @@ public class OrderService {
             receiver, address, message);
 
     orderHistoryRepository.save(orderHistory);
+
+    return new OrderResultDto(user.amount());
   }
 }

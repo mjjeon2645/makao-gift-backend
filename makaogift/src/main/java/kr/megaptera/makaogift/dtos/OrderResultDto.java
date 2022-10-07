@@ -1,17 +1,17 @@
 package kr.megaptera.makaogift.dtos;
 
 public class OrderResultDto {
-  private String message;
+  private Long amount;
+
 
   public OrderResultDto() {
   }
 
-  public OrderResultDto(String message) {
-    this.message = message;
+  public OrderResultDto(Long amount) {
+    this.amount = amount;
   }
 
-  public String getMessage() {
-    return message;
+  public Long getAmount() {
+    return amount;
   }
 }
-

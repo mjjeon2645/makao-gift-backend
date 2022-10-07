@@ -1,6 +1,7 @@
 package kr.megaptera.makaogift.models;
 
 import kr.megaptera.makaogift.dtos.*;
+import kr.megaptera.makaogift.exceptions.*;
 import org.springframework.security.crypto.password.*;
 
 import javax.persistence.*;
@@ -71,6 +72,9 @@ public class User {
   }
 
   public void pay(Long totalPrice) {
+    if (this.amount < totalPrice) {
+      throw new LowAmountError();
+    }
     this.amount -= totalPrice;
   }
 }

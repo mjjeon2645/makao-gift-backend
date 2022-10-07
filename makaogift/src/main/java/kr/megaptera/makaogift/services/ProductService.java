@@ -12,13 +12,15 @@ import java.util.*;
 @Transactional
 public class ProductService {
   private final ProductRepository productRepository;
+  private PageRequest pageable;
 
   public ProductService(ProductRepository productRepository) {
     this.productRepository = productRepository;
   }
 
   public Page<Product> products(int page) {
-    Pageable pageable = PageRequest.of(page - 1, 8);
+    Sort sort = Sort.by("id").descending();
+    pageable = PageRequest.of(page - 1, 8, sort);
 
     return productRepository.findAll(pageable);
   }
@@ -26,5 +28,10 @@ public class ProductService {
   public Product detail(Long id) {
     Product selectedProduct = productRepository.getReferenceById(id);
     return selectedProduct;
+  }
+
+  public int getPages() {
+    // pageable이 initialize가 안되었는데도 가능한가?
+    return productRepository.findAll(pageable).getTotalPages();
   }
 }
