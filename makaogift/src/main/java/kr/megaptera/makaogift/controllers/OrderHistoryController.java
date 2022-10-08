@@ -19,14 +19,17 @@ public class OrderHistoryController {
 
   @GetMapping
   public OrderHistoriesDto histories(
+      @RequestParam(required = false, defaultValue = "1") int page,
       @RequestAttribute("userId") String sender
   ) {
 
     List<OrderHistoryDto> orderHistories =
-        orderHistoryService.histories(sender).stream().map(OrderHistory::toDto)
+        orderHistoryService.histories(sender, page).stream().map(OrderHistory::toDto)
             .collect(Collectors.toList());
 
-    return new OrderHistoriesDto(orderHistories);
+    int totalPageNumbers = orderHistoryService.getPages(sender);
+
+    return new OrderHistoriesDto(orderHistories, totalPageNumbers);
   }
 
   @GetMapping("{id}")
