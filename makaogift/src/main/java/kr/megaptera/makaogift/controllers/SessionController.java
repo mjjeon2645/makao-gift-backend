@@ -19,6 +19,15 @@ public class SessionController {
     this.jwtUtil = jwtUtil;
   }
 
+  @GetMapping("me")
+  public BalanceResultDto balance(
+      @RequestAttribute("userId") String userId
+  ) {
+    Long balance = loginService.balance(userId);
+
+    return new BalanceResultDto(balance);
+  }
+
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public LoginResultDto login(

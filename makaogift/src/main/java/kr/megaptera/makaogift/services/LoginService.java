@@ -31,4 +31,11 @@ public class LoginService {
 
     return found;
   }
+
+  public Long balance(String userId) {
+    User found = userRepository.findByUserId(userId)
+        .orElseThrow(() -> new LoginFailed());
+
+    return found.amount();
+  }
 }
