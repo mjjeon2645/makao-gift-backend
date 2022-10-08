@@ -48,9 +48,13 @@ public class OrderService {
 
     String message = orderRequestDto.getMessage();
 
+    String imgUrl = productRepository
+        .getReferenceById(orderRequestDto.getProductId())
+        .getImgSource();
+
     OrderHistory orderHistory =
         new OrderHistory(sender, productName, manufacturer, volume, totalPrice,
-            receiver, address, message);
+            receiver, address, message, imgUrl);
 
     orderHistoryRepository.save(orderHistory);
 

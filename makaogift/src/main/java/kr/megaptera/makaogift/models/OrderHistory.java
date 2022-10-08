@@ -40,7 +40,7 @@ public class OrderHistory {
   public OrderHistory(String sender, String productName,
                       String manufacturer, Long volume, Long totalPrice,
                       String receiver, String address,
-                      String message) {
+                      String message, String imgUrl) {
     this.sender = sender;
     this.productName = productName;
     this.manufacturer = manufacturer;
@@ -49,6 +49,7 @@ public class OrderHistory {
     this.receiver = receiver;
     this.address = address;
     this.message = message;
+    this.imgUrl = imgUrl;
   }
 
   public OrderHistory(Long id, String sender, String productName,
