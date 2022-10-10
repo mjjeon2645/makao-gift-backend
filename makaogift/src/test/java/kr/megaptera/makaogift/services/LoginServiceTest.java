@@ -57,4 +57,15 @@ class LoginServiceTest {
       loginService.login("mjjeon2645", "test111");
     });
   }
+
+  @Test
+  void balance() {
+    String userId = "mjjeon2645";
+
+    given(userRepository.findByUserId(userId))
+        .willReturn(Optional.of(new User(1L, "전민지", userId, 50_000L)));
+
+    Long balance = loginService.balance(userId);
+    assertThat(balance).isEqualTo(50_000L);
+  }
 }

@@ -3,6 +3,7 @@ package kr.megaptera.makaogift.controllers;
 import kr.megaptera.makaogift.exceptions.*;
 import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.services.*;
+import kr.megaptera.makaogift.utils.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
@@ -26,8 +27,13 @@ class SessionControllerTest {
   @MockBean
   private LoginService loginService;
 
+  @SpyBean
+  private JwtUtil jwtUtil;
+
   @BeforeEach
   void setUp() {
+    given(loginService.balance("mjjeon2645")).willReturn(50_000L);
+
     given(loginService.login("mjjeon2645", "test"))
         .willReturn(User.fake("mjjeon2645"));
 
@@ -36,6 +42,18 @@ class SessionControllerTest {
 
     given(loginService.login("mjjeon2645", "test111"))
         .willThrow(new LoginFailed());
+  }
+
+  @Test
+  void balance() throws Exception {
+    String accessToken = jwtUtil.encode("mjjeon2645");
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/session/me")
+        .header("Authorization", "Bearer " + accessToken))
+        .andExpect(status().isOk())
+        .andExpect(content().string(
+            containsString("\"balance\":")
+        ));
   }
 
   @Test

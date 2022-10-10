@@ -33,7 +33,6 @@ public class SessionController {
   public LoginResultDto login(
       @RequestBody LoginRequestDto loginRequestDto
   ) {
-
     User user = loginService.login(
         loginRequestDto.getUserId(),
         loginRequestDto.getPassword());
