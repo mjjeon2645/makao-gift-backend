@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.*;
 import java.time.*;
 import java.util.*;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,6 +46,12 @@ class OrderHistoryControllerTest {
 
     given(orderHistoryService.histories(sender, page))
         .willReturn(new PageImpl<>(orderHistories, pageable, orderHistories.size()));
+
+    Long id = 1L;
+    given(orderHistoryService.detail(id))
+        .willReturn(
+            new OrderHistory(1L, "mjjeon2645", "아이폰14", "애플", 1L, 500000L,
+                LocalDateTime.of(2022, 10, 3, 11, 3, 14, 0), "이서진", "서울시 동작구", "서진아 생일축하해!", "imgUrl"));
   }
 
   @Test
@@ -53,5 +60,17 @@ class OrderHistoryControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/orders")
             .header("Authorization", "Bearer " + accessToken))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  void detail() throws Exception {
+    String accessToken = jwtUtil.encode("mjjeon2645");
+    mockMvc.perform(MockMvcRequestBuilders.get("/orders/1")
+            .header("Authorization", "Bearer " + accessToken)
+            .param("id", "1"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(
+            containsString("\"totalPrice\":50000")
+        ));
   }
 }
