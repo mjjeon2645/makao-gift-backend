@@ -10,14 +10,14 @@ public class OrderHistoryDto {
   private String receiver;
   private String address;
   private String message;
-  private String imgUrl;
+  private String imgSource;
 
   public OrderHistoryDto() {
   }
 
   public OrderHistoryDto(Long id, String productName, String manufacturer, Long volume,
                          Long totalPrice, String orderedDate, String receiver,
-                         String address, String message, String imgUrl) {
+                         String address, String message, String imgSource) {
     this.id = id;
     this.productName = productName;
     this.manufacturer = manufacturer;
@@ -27,7 +27,7 @@ public class OrderHistoryDto {
     this.receiver = receiver;
     this.address = address;
     this.message = message;
-    this.imgUrl = imgUrl;
+    this.imgSource = imgSource;
   }
 
   public Long getId() {
@@ -66,7 +66,7 @@ public class OrderHistoryDto {
     return message;
   }
 
-  public String getImgUrl() {
-    return imgUrl;
+  public String getImgSource() {
+    return imgSource;
   }
 }

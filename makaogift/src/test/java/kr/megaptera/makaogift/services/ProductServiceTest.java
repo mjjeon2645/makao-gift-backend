@@ -3,6 +3,7 @@ package kr.megaptera.makaogift.services;
 import kr.megaptera.makaogift.models.*;
 import kr.megaptera.makaogift.repositories.*;
 import org.junit.jupiter.api.*;
+import org.springframework.data.domain.*;
 
 import java.util.*;
 
@@ -22,22 +23,32 @@ class ProductServiceTest {
 
     productService = new ProductService(productRepository);
 
-    given(productRepository.findAll()).willReturn(List.of(
-        new Product(1L, "누구나 좋아하는 지방시 선물세트", 10_000L, "GIVENCHY", "지방시 선물세트 누구나 다 좋아합니다", "imgUrl"),
-        new Product(2L, "새로나온 아이폰14", 10_000L, "애플", "아이폰 14 싸다", "imgUrl")
-    ));
+    List<Product> products = List.of(
+        new Product(1L, "누구나 좋아하는 지방시 선물세트", 10_000L, "GIVENCHY",
+            "지방시 선물세트 누구나 다 좋아합니다", "imgUrl"),
+        new Product(2L, "맛있는 횡성한우", 35_000L, "횡성농협",
+            "횡성한우로 맛있는 식사반찬!", "imgUrl"));
+
+    Sort sort = Sort.by("id").descending();
+    int page = 1;
+    Pageable pageable = PageRequest.of(page - 1, 8, sort);
+
+    given(productRepository.findAll(pageable))
+        .willReturn(new PageImpl<>(products, pageable, products.size()));
 
     given(productRepository.getReferenceById(1L)).willReturn(
-        new Product(1L, "누구나 좋아하는 지방시 선물세트", 10_000L, "GIVENCHY", "지방시 선물세트 누구나 다 좋아합니다", "imgUrl")
+        new Product(1L, "누구나 좋아하는 지방시 선물세트", 10_000L, "GIVENCHY",
+            "지방시 선물세트 누구나 다 좋아합니다", "imgUrl")
     );
   }
 
   @Test
   void products() {
-    List<Product> products = productService.products();
+    int page = 1;
+    Page<Product> products = productService.products(page);
 
-    assertThat(products).hasSize(2);
-    assertThat(products.get(1).getName()).isEqualTo("새로나온 아이폰14");
+    assertThat(products.getTotalElements()).isEqualTo(2);
+    assertThat(products.getTotalPages()).isEqualTo(1);
   }
 
   @Test

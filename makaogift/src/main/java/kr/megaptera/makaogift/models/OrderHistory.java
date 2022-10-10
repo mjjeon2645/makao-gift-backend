@@ -32,7 +32,7 @@ public class OrderHistory {
 
   private String message;
 
-  private String imgUrl;
+  private String imgSource;
 
   public OrderHistory() {
   }
@@ -40,7 +40,7 @@ public class OrderHistory {
   public OrderHistory(String sender, String productName,
                       String manufacturer, Long volume, Long totalPrice,
                       String receiver, String address,
-                      String message, String imgUrl) {
+                      String message, String imgSource) {
     this.sender = sender;
     this.productName = productName;
     this.manufacturer = manufacturer;
@@ -49,13 +49,13 @@ public class OrderHistory {
     this.receiver = receiver;
     this.address = address;
     this.message = message;
-    this.imgUrl = imgUrl;
+    this.imgSource = imgSource;
   }
 
   public OrderHistory(Long id, String sender, String productName,
                       String manufacturer, Long volume, Long totalPrice,
                       LocalDateTime createdAt, String receiver, String address,
-                      String message, String imgUrl) {
+                      String message, String imgSource) {
     this.id = id;
     this.sender = sender;
     this.productName = productName;
@@ -66,7 +66,7 @@ public class OrderHistory {
     this.receiver = receiver;
     this.address = address;
     this.message = message;
-    this.imgUrl = imgUrl;
+    this.imgSource = imgSource;
   }
 
   public OrderHistoryDto toDto() {
@@ -74,7 +74,7 @@ public class OrderHistory {
     String orderedDate = createdAt == null ? "" : createdAt.toLocalDate().toString();
 
     return new OrderHistoryDto(id, productName, manufacturer, volume, totalPrice,
-        orderedDate, receiver, address, message, imgUrl);
+        orderedDate, receiver, address, message, imgSource);
   }
 
   public Long id() {
@@ -117,7 +117,7 @@ public class OrderHistory {
     return message;
   }
 
-  public String imgUrl() {
-    return imgUrl;
+  public String imgSource() {
+    return imgSource;
   }
 }

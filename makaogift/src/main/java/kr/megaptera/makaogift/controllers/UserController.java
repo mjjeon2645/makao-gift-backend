@@ -27,7 +27,6 @@ public class UserController {
     return user.toRegistrationResultDto();
   }
 
-
   @ExceptionHandler(DuplicatedUserIdError.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public String duplicatedUserIdError() {
