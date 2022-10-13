@@ -73,7 +73,7 @@ public class User {
 
   public void pay(Long totalPrice) {
     if (this.amount < totalPrice) {
-      throw new LowAmountError();
+      throw new LowBalanceError();
     }
     this.amount -= totalPrice;
   }

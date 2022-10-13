@@ -4,6 +4,7 @@ import kr.megaptera.makaogift.dtos.*;
 import kr.megaptera.makaogift.exceptions.*;
 import kr.megaptera.makaogift.services.*;
 import org.springframework.http.*;
+import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,14 +21,14 @@ public class OrderController {
 
   public OrderResultDto order(
       @RequestAttribute("userId") String sender,
-      @RequestBody OrderRequestDto orderRequestDto
+      @Validated @RequestBody OrderRequestDto orderRequestDto
   ) {
     return orderService.order(sender, orderRequestDto);
   }
 
-  @ExceptionHandler(LowAmountError.class)
+  @ExceptionHandler(LowBalanceError.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public String lowAmountError() {
-    return "❌잔액이 부족하여 선물하기가 불가합니다❌";
+  public ErrorDto lowBalanceError() {
+    return new LowBalanceErrorDto();
   }
 }

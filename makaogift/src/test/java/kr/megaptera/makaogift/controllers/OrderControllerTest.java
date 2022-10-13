@@ -46,12 +46,12 @@ class OrderControllerTest {
   }
 
   @Test
-  void orderWithLowAmount() throws Exception {
+  void orderWithLowBalance() throws Exception {
     User user = new User(2L, "전민지", "mjjeon2645", 30_000L);
     String accessToken = jwtUtil.encode(user.userId());
 
     given(orderService.order(eq(user.userId()), any()))
-        .willThrow(new LowAmountError());
+        .willThrow(new LowBalanceError());
 
     mockMvc.perform(MockMvcRequestBuilders.post("/order")
             .header("Authorization", "Bearer " + accessToken)

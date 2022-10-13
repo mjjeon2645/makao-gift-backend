@@ -1,11 +1,23 @@
 package kr.megaptera.makaogift.dtos;
 
+import org.hibernate.validator.constraints.*;
+
+import javax.validation.constraints.NotBlank;
+
 public class OrderRequestDto {
+  @NotBlank(message = "성함을 입력해주세요")
   private String receiver;
+
+  @NotBlank(message = "주소를 입력해주세요")
   private String address;
+
+  @Length(max = 100)
   private String message;
+
   private Long productId;
+
   private Long volume;
+
   private Long totalPrice;
 
   public String getReceiver() {
